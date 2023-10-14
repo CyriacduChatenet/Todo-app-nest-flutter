@@ -19,7 +19,7 @@ export class Todo {
   content: string;
 
   @Column()
-  done: boolean;
+  completed: boolean;
 
   @CreateDateColumn()
   created_at: Date;
