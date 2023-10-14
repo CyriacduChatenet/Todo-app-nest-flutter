@@ -1,3 +1,4 @@
+import 'package:client/services/todo.service.dart';
 import 'package:flutter/material.dart';
 
 class CreateTodoFormWidget extends StatefulWidget {
@@ -15,16 +16,37 @@ class _CreateTodoFormWidgetState extends State<CreateTodoFormWidget> {
   String get todoTitle => _titleController.text;
   String get todoContent => _contentController.text;
 
+  final todoService = TodoService();
+
   void _handleCheck(bool? value) {
     setState(() {
       _isChecked = value ?? false;
     });
   }
 
-  void _handleSubmit () {
-    print('Title: $todoTitle');
-    print('Content: $todoContent');
+  void _handleSubmit() {
+    final title = _titleController
+        .text; // Mettez à jour le contrôleur avec la valeur actuelle
+    final content = _contentController
+        .text; // Mettez à jour le contrôleur avec la valeur actuelle
+
+    todoService.createTodo(
+      title: title,
+      content: content,
+      completed: _isChecked,
+    );
+
+    print('Title: $title'); // Utilisez la valeur mise à jour
+    print('Content: $content'); // Utilisez la valeur mise à jour
     print('Completed: $_isChecked');
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    _titleController.dispose();
+    _contentController.dispose();
+    super.dispose();
   }
 
   @override
