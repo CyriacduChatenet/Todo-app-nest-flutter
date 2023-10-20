@@ -13,40 +13,24 @@ class _CreateTodoFormWidgetState extends State<CreateTodoFormWidget> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
 
-  String get todoTitle => _titleController.text;
-  String get todoContent => _contentController.text;
-
   final todoService = TodoService();
-
   void _handleCheck(bool? value) {
     setState(() {
       _isChecked = value ?? false;
     });
   }
 
-  void _handleSubmit() {
-    final title = _titleController
-        .text; // Mettez à jour le contrôleur avec la valeur actuelle
-    final content = _contentController
-        .text; // Mettez à jour le contrôleur avec la valeur actuelle
-
-    todoService.createTodo(
-      title: title,
-      content: content,
-      completed: _isChecked,
-    );
-
-    print('Title: $title'); // Utilisez la valeur mise à jour
-    print('Content: $content'); // Utilisez la valeur mise à jour
-    print('Completed: $_isChecked');
-  }
-
   @override
   void dispose() {
-    // Clean up the controller when the widget is disposed.
     _titleController.dispose();
     _contentController.dispose();
     super.dispose();
+  }
+
+  void _submitForm() {
+    String title = _titleController.text;
+    String content = _contentController.text;
+    todoService.createTodo(title: title, content: content, completed: _isChecked);
   }
 
   @override
@@ -54,22 +38,16 @@ class _CreateTodoFormWidgetState extends State<CreateTodoFormWidget> {
     return Form(
         child: Column(
       children: [
-        const Padding(
-            padding: EdgeInsets.all(20.0),
-            child: TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Todo title',
-              ),
-            )),
-        const Padding(
-            padding: EdgeInsets.all(20.0),
-            child: TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Todo content',
-              ),
-            )),
+        TextFormField(
+          controller: _titleController,
+          decoration: const InputDecoration(labelText: 'Title'),
+        ),
+        const SizedBox(height: 20),
+        TextFormField(
+          controller: _contentController,
+          decoration: const InputDecoration(labelText: 'Content'),
+        ),
+        const SizedBox(height: 20),
         Padding(
           padding: const EdgeInsets.all(20.0),
           child: Row(
@@ -83,7 +61,7 @@ class _CreateTodoFormWidgetState extends State<CreateTodoFormWidget> {
           ),
         ),
         FloatingActionButton(
-          onPressed: _handleSubmit,
+          onPressed: _submitForm,
           tooltip: 'Add todo',
           child: const Icon(Icons.add),
         ),

@@ -1,4 +1,5 @@
 import 'package:client/widgets/createTodoForm.widget.dart';
+import 'package:client/widgets/todoList.widget.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -15,7 +16,8 @@ class HomeScreen extends StatelessWidget {
       ),
       body: const Column(
         children: [
-          CreateTodoFormWidget()
+          CreateTodoFormWidget(),
+          TodoListWidget(),
         ],
       )
     );

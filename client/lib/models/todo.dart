@@ -11,8 +11,11 @@ class Todo {
   final String content;
   final bool completed;
 
-  @override
-  String toString() {
-    return 'Todo{title: $title, content: $content, completed: $completed}';
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'content': content,
+      'completed': completed,
+    };
   }
 }
