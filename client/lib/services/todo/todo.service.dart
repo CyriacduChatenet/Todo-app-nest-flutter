@@ -1,6 +1,6 @@
 import 'package:client/interfaces/todo.interface.dart';
 import 'package:client/repository/todo.repository.dart';
-import '../models/todo.dart';
+import '../../models/todo.dart';
 
 class TodoService implements TodoInterface {
   final todoRepository = TodoRepository();

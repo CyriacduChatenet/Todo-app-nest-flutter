@@ -1,5 +1,5 @@
 import 'package:client/models/todo.dart';
-import 'package:client/services/todo.service.dart';
+import 'package:client/services/todo/todo.service.dart';
 import 'package:client/widgets/todoItem.widget.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +38,7 @@ class _TodoListWidgetState extends State<TodoListWidget> {
               },
             )
           : const Center(
-              child: CircularProgressIndicator(), // Ou un widget de chargement personnalisé.
+              child: CircularProgressIndicator(),
             ),
     );
   }
