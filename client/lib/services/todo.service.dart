@@ -8,51 +8,51 @@ class TodoService implements TodoInterface {
   @override
   Future<List<Todo>> getTodos() async {
     final todosJson = await todoRepository.getTodos();
-    print(todosJson);
-
     List<Todo> todos = [];
 
     todosJson.forEach((Map<String, dynamic> todo) {
-  // Accédez aux données de chaque tâche en utilisant 'todo'
-  String title = todo['title'];
-  String content = todo['content'];
-  bool completed = todo['completed'];
+      String title = todo['title'];
+      String content = todo['content'];
+      bool completed = todo['completed'];
 
-  // Faites quelque chose avec les données de la tâche
-  print('Title: $title, Content: $content, Completed: $completed');
-  final Todo newTodo = Todo(title: title, content: content, completed: completed);
-  todos.add(newTodo);
-});
-    
+      final Todo newTodo =
+          Todo(title: title, content: content, completed: completed);
+      todos.add(newTodo);
+    });
     return todos;
   }
 
   @override
   Future<Todo> getTodoById(String id) async {
-    return Todo(
-      id: '1',
-      title: 'Todo 1',
-      content: 'Todo 1 content',
-      completed: false,
+    final todoJson = await todoRepository.getTodoById(id);
+    Todo todo = Todo(
+      id: todoJson['id'],
+      title: todoJson['title'],
+      content: todoJson['content'],
+      completed: todoJson['completed'],
     );
+    return todo;
   }
 
   @override
-  Future<Todo> createTodo({ required String title, required String content, required bool completed }) async {
-   final Map<String, dynamic> todoMap = {
+  Future<Todo> createTodo(
+      {required String title,
+      required String content,
+      required bool completed}) async {
+    final Map<String, dynamic> todoMap = {
       'title': title,
       'content': content,
       'completed': completed,
     };
-    
-  final Map<String, dynamic> response = await todoRepository.createTodo(todoMap);
-  return Todo(
-    id: response['id'],
-    title: response['title'],
-    content: response['content'],
-    completed: response['completed'],
-  );
-}
+
+    final Map<String, dynamic> response = await todoRepository.createTodo(todoMap);
+    return Todo(
+      id: response['id'],
+      title: response['title'],
+      content: response['content'],
+      completed: response['completed'],
+    );
+  }
 
   @override
   Future<Todo> updateTodo({
@@ -61,16 +61,24 @@ class TodoService implements TodoInterface {
     required String content,
     required bool completed,
   }) async {
+    final Map<String, dynamic> todoMap = {
+      'title': title,
+      'content': content,
+      'completed': completed,
+    };
+
+    final Map<String, dynamic> response = await todoRepository.updateTodo(id, todoMap);
+
     return Todo(
-      id: '1',
-      title: 'Todo 1',
-      content: 'Todo 1 content',
-      completed: false,
+      id: response['id'],
+      title: response['title'],
+      content: response['content'],
+      completed: response['completed'],
     );
   }
 
   @override
   Future<void> deleteTodoById(String id) async {
-    return;
+    await todoRepository.deleteTodoById(id);
   }
 }
