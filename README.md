@@ -10,3 +10,12 @@
 flutter create .
 flutter run
 ```
+
+API .env example
+```bash
+POSTGRESQL_DATABASE_PORT = 5432
+POSTGRESQL_DATABASE_HOST = localhost
+POSTGRESQL_DATABASE_NAME = postgres
+POSTGRESQL_DATABASE_USERNAME = root
+POSTGRESQL_DATABASE_PASSWORD = root
+```
