@@ -1,15 +1,15 @@
 class Todo {
   Todo({
     this.id,
-    required this.title,
+    this.title,
     this.description,
-    required this.completed,
+    this.completed,
   });
 
   final String? id;
-  final String title;
+  final String? title;
   final String? description;
-  final bool completed;
+  final bool? completed;
 
   Map<String, Object?> toJson() {
     return {

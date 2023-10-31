@@ -9,6 +9,22 @@ sealed class TodoEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class FindAllTodos extends TodoEvent {
+  FindAllTodos();
+
+  @override
+  List<Object> get props => [];
+}
+
+class FindTodoById extends TodoEvent {
+  final String id;
+
+  FindTodoById({required this.id});
+
+  @override
+  List<Object> get props => [id];
+}
+
 class AddTodo extends TodoEvent {
   final Todo todo;
 
@@ -35,7 +51,3 @@ class DeleteTodo extends TodoEvent {
   @override
   List<Object> get props => [todo];
 }
-
-class LoadTodos extends TodoEvent {}
-
-class ClearTodos extends TodoEvent {}

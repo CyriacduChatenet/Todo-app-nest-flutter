@@ -7,6 +7,24 @@ import 'package:client/models/todo_model.dart';
 class TodoBloc extends Bloc<TodoEvent, TodoState> {
   TodoBloc()
       : super(const TodoState(title: '', description: '', completed: false)) {
+    on<FindAllTodos>((event, emit) {
+      final currentState = state;
+      emit(currentState.copyWith(
+        title: '',
+        description: '',
+        completed: false,
+      ));
+    });
+
+    on<FindTodoById>((event, emit) {
+      final currentState = state;
+      emit(currentState.copyWith(
+        title: '',
+        description: '',
+        completed: false,
+      ));
+    });
+
     on<AddTodo>((event, emit) {
       final Todo todo = event.todo;
       final currentState = state;
@@ -34,24 +52,6 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
         title: todo.title,
         description: todo.description,
         completed: todo.completed,
-      ));
-    });
-
-    on<LoadTodos>((event, emit) {
-      final currentState = state;
-      emit(currentState.copyWith(
-        title: '',
-        description: '',
-        completed: false,
-      ));
-    });
-
-    on<ClearTodos>((event, emit) {
-      final currentState = state;
-      emit(currentState.copyWith(
-        title: '',
-        description: '',
-        completed: false,
       ));
     });
   }
