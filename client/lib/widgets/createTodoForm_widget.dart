@@ -1,8 +1,14 @@
+import 'package:client/blocs/todo/todo_bloc.dart';
+import 'package:client/repository/todo_repository.dart';
+import 'package:client/services/todo_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class CreateTodoForm extends StatelessWidget {
-  CreateTodoForm({Key? key});
+  CreateTodoForm({Key? key})
+      : todoService = TodoService(TodoRepository(), TodoBloc());
+
+  final TodoService todoService;
 
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();

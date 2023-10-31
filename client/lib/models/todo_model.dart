@@ -13,7 +13,6 @@ class Todo {
 
   Map<String, Object?> toJson() {
     return {
-      'id': id,
       'title': title,
       'description': description,
       'completed': completed,
@@ -22,7 +21,6 @@ class Todo {
 
   static Todo fromJson(Map<String, Object?> json) {
     return Todo(
-      id: json['id'] as String?,
       title: json['title'] as String,
       description: json['description'] as String?,
       completed: json['completed'] as bool,

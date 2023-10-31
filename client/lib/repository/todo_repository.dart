@@ -47,7 +47,7 @@ class TodoRepository extends TodoRepositoryInterface {
 
   @override
   Future<Todo> updateTodo(Todo todo) async {
-    final response = await http.put(
+    final response = await http.patch(
       Uri.parse('$baseUrl/todo/${todo.id}'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',

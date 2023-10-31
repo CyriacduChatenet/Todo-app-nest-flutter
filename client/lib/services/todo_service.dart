@@ -36,6 +36,7 @@ class TodoService implements TodoServiceInterface {
   Future<void> createTodo(Todo todo) async {
     try {
       final addedTodo = await _repository.createTodo(todo);
+
       _bloc.add(AddTodo(todo: addedTodo)); // Émettre un événement AddTodo
     } catch (e) {
       // Gérer l'erreur
@@ -46,6 +47,7 @@ class TodoService implements TodoServiceInterface {
   Future<void> updateTodo(Todo todo) async {
     try {
       final updatedTodo = await _repository.updateTodo(todo);
+
       _bloc.add(
           UpdateTodo(todo: updatedTodo)); // Émettre un événement UpdateTodo
     } catch (e) {
