@@ -6,6 +6,19 @@ class CreateTodoForm extends StatelessWidget {
 
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
+  bool completed = false;
+
+  _submit() {
+    final title = titleController.text;
+    final description = descriptionController.text;
+    if (title.isNotEmpty && description.isNotEmpty) {
+      print('Title: $title');
+      print('Description: $description');
+      print('Completed: $completed');
+    } else {
+      print('Title and description must not be empty');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,15 +50,13 @@ class CreateTodoForm extends StatelessWidget {
               if (kDebugMode) {
                 print('Checkbox value: $value');
               }
+              completed = value!;
+              print('Completed value: $completed');
             },
           ),
           const SizedBox(height: 16),
           ElevatedButton(
-            onPressed: () {
-              if (kDebugMode) {
-                print('hello');
-              }
-            },
+            onPressed: _submit,
             child: const Text('Create Todo'),
           ),
         ],
