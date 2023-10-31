@@ -6,7 +6,8 @@ import 'package:client/models/todo_model.dart';
 
 class TodoBloc extends Bloc<TodoEvent, TodoState> {
   TodoBloc()
-      : super(const TodoState(title: '', content: '', completed: false)) {
+      : super(const TodoState(
+            todos: [], title: '', content: '', completed: false)) {
     on<FindAllTodos>((event, emit) {
       final currentState = state;
       emit(currentState.copyWith(

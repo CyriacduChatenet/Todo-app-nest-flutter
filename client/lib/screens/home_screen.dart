@@ -1,4 +1,5 @@
 import 'package:client/widgets/createTodoForm_widget.dart';
+import 'package:client/widgets/todoList_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -14,7 +15,9 @@ class HomeScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0), // Add 'const' here
-          child: CreateTodoForm(),
+          child: Column(
+            children: <Widget>[CreateTodoForm(), TodoList()],
+          ),
         ),
       ),
     );
