@@ -1,6 +1,28 @@
-part of 'todo_bloc.dart';
+import 'package:equatable/equatable.dart';
 
-@immutable
-sealed class TodoState {}
+class TodoState extends Equatable {
+  final String title;
+  final String? description;
+  final bool completed;
 
-final class TodoInitial extends TodoState {}
+  const TodoState({
+    required this.title,
+    this.description,
+    required this.completed,
+  });
+
+  @override
+  List<Object?> get props => [title, description, completed];
+
+  TodoState copyWith({
+    String? title,
+    String? description,
+    bool? completed,
+  }) {
+    return TodoState(
+      title: title ?? this.title,
+      description: description ?? this.description,
+      completed: completed ?? this.completed,
+    );
+  }
+}
