@@ -1,4 +1,5 @@
 import 'package:client/blocs/todo/todo_bloc.dart';
+import 'package:client/models/todo_model.dart';
 import 'package:client/repository/todo_repository.dart';
 import 'package:client/services/todo_service.dart';
 import 'package:flutter/foundation.dart';
@@ -11,18 +12,23 @@ class CreateTodoForm extends StatelessWidget {
   final TodoService todoService;
 
   final titleController = TextEditingController();
-  final descriptionController = TextEditingController();
+  final contentController = TextEditingController();
   bool completed = false;
 
   _submit() {
     final title = titleController.text;
-    final description = descriptionController.text;
-    if (title.isNotEmpty && description.isNotEmpty) {
+    final content = contentController.text;
+    if (title.isNotEmpty && content.isNotEmpty) {
       print('Title: $title');
-      print('Description: $description');
+      print('content: $content');
       print('Completed: $completed');
+      todoService.createTodo(Todo(
+        title: title,
+        content: content,
+        completed: completed,
+      ));
     } else {
-      print('Title and description must not be empty');
+      print('Title and content must not be empty');
     }
   }
 
@@ -40,12 +46,12 @@ class CreateTodoForm extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          const Text('Description'),
+          const Text('content'),
           TextFormField(
-            controller: descriptionController,
+            controller: contentController,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
-              hintText: 'Enter a description',
+              hintText: 'Enter a content',
             ),
           ),
           const SizedBox(height: 16),

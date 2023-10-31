@@ -31,12 +31,18 @@ class TodoRepository extends TodoRepositoryInterface {
 
   @override
   Future<Todo> createTodo(Todo todo) async {
+    Todo newTodo = Todo(
+      title: todo.title,
+      content: todo.content,
+      completed: todo.completed,
+    );
+
     final response = await http.post(
       Uri.parse('$baseUrl/todo'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(todo.toJson()),
+      body: jsonEncode(newTodo.toJson()),
     );
     if (response.statusCode == 201) {
       return Todo.fromJson(json.decode(response.body));
@@ -47,12 +53,18 @@ class TodoRepository extends TodoRepositoryInterface {
 
   @override
   Future<Todo> updateTodo(Todo todo) async {
+    Todo updateTodo = Todo(
+      title: todo.title,
+      content: todo.content,
+      completed: todo.completed,
+    );
+
     final response = await http.patch(
       Uri.parse('$baseUrl/todo/${todo.id}'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(todo.toJson()),
+      body: jsonEncode(updateTodo.toJson()),
     );
     if (response.statusCode == 200) {
       return Todo.fromJson(json.decode(response.body));

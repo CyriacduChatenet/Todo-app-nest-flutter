@@ -6,12 +6,12 @@ import 'package:client/models/todo_model.dart';
 
 class TodoBloc extends Bloc<TodoEvent, TodoState> {
   TodoBloc()
-      : super(const TodoState(title: '', description: '', completed: false)) {
+      : super(const TodoState(title: '', content: '', completed: false)) {
     on<FindAllTodos>((event, emit) {
       final currentState = state;
       emit(currentState.copyWith(
         title: '',
-        description: '',
+        content: '',
         completed: false,
       ));
     });
@@ -20,7 +20,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       final currentState = state;
       emit(currentState.copyWith(
         title: '',
-        description: '',
+        content: '',
         completed: false,
       ));
     });
@@ -30,7 +30,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       final currentState = state;
       emit(currentState.copyWith(
         title: todo.title,
-        description: todo.description,
+        content: todo.content,
         completed: todo.completed,
       ));
     });
@@ -40,7 +40,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       final currentState = state;
       emit(currentState.copyWith(
         title: todo.title,
-        description: todo.description,
+        content: todo.content,
         completed: todo.completed,
       ));
     });
@@ -50,7 +50,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       final currentState = state;
       emit(currentState.copyWith(
         title: todo.title,
-        description: todo.description,
+        content: todo.content,
         completed: todo.completed,
       ));
     });

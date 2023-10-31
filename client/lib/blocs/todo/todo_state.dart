@@ -2,26 +2,26 @@ import 'package:equatable/equatable.dart';
 
 class TodoState extends Equatable {
   final String title;
-  final String? description;
+  final String? content;
   final bool completed;
 
   const TodoState({
     required this.title,
-    this.description,
+    this.content,
     required this.completed,
   });
 
   @override
-  List<Object?> get props => [title, description, completed];
+  List<Object?> get props => [title, content, completed];
 
   TodoState copyWith({
     String? title,
-    String? description,
+    String? content,
     bool? completed,
   }) {
     return TodoState(
       title: title ?? this.title,
-      description: description ?? this.description,
+      content: content ?? this.content,
       completed: completed ?? this.completed,
     );
   }
