@@ -30,6 +30,12 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+/ios/
+/android/
+/macos/
+/linux/
+/windows/
+/web/
 
 # Symbolication related
 app.*.symbols
@@ -41,3 +47,4 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
