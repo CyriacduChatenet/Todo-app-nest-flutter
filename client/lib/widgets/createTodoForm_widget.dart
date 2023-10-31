@@ -2,7 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class CreateTodoForm extends StatelessWidget {
-  const CreateTodoForm({Key? key});
+  CreateTodoForm({Key? key});
+
+  final titleController = TextEditingController();
+  final descriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -10,16 +13,18 @@ class CreateTodoForm extends StatelessWidget {
       child: Column(
         children: <Widget>[
           const Text('Title'),
-          const TextField(
-            decoration: InputDecoration(
+          TextFormField(
+            controller: titleController,
+            decoration: const InputDecoration(
               border: OutlineInputBorder(),
               hintText: 'Enter a title',
             ),
           ),
           const SizedBox(height: 16),
           const Text('Description'),
-          const TextField(
-            decoration: InputDecoration(
+          TextFormField(
+            controller: descriptionController,
+            decoration: const InputDecoration(
               border: OutlineInputBorder(),
               hintText: 'Enter a description',
             ),
