@@ -1,16 +1,15 @@
 import 'dart:convert';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:client/interfaces/todo_repository_interface.dart';
 import 'package:client/models/todo_model.dart';
 
 class TodoRepository extends TodoRepositoryInterface {
-  final String baseUrl = DotEnv().env['API_URL']!;
+  final String baseUrl = 'http://localhost:8000/api/v1';
 
   @override
   Future<List<Todo>> findAllTodos() async {
-    final response = await http.get(Uri.parse('$baseUrl/todos'));
+    final response = await http.get(Uri.parse('$baseUrl/todo'));
     if (response.statusCode == 200) {
       final List<dynamic> jsonList = json.decode(response.body);
       return jsonList.map((json) => Todo.fromJson(json)).toList();
@@ -21,7 +20,7 @@ class TodoRepository extends TodoRepositoryInterface {
 
   @override
   Future<Todo> findTodoById(String id) async {
-    final response = await http.get(Uri.parse('$baseUrl/todos/$id'));
+    final response = await http.get(Uri.parse('$baseUrl/todo/$id'));
 
     if (response.statusCode == 200) {
       return Todo.fromJson(json.decode(response.body));
@@ -33,7 +32,7 @@ class TodoRepository extends TodoRepositoryInterface {
   @override
   Future<Todo> createTodo(Todo todo) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/todos'),
+      Uri.parse('$baseUrl/todo'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -49,7 +48,7 @@ class TodoRepository extends TodoRepositoryInterface {
   @override
   Future<Todo> updateTodo(Todo todo) async {
     final response = await http.put(
-      Uri.parse('$baseUrl/todos/${todo.id}'),
+      Uri.parse('$baseUrl/todo/${todo.id}'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -64,7 +63,7 @@ class TodoRepository extends TodoRepositoryInterface {
 
   @override
   Future<void> deleteTodo(String id) async {
-    final response = await http.delete(Uri.parse('$baseUrl/todos/$id'));
+    final response = await http.delete(Uri.parse('$baseUrl/todo/$id'));
     if (response.statusCode != 204) {
       throw Exception('Failed to delete todo');
     }
