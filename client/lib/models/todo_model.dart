@@ -1,13 +1,13 @@
 class Todo {
   Todo({
     this.id,
-    this.title,
+    required this.title,
     this.content,
     this.completed,
   });
 
   final String? id;
-  final String? title;
+  final String title;
   final String? content;
   final bool? completed;
 
@@ -25,6 +25,20 @@ class Todo {
       title: json['title'] as String,
       content: json['content'] as String?,
       completed: json['completed'] as bool,
+    );
+  }
+
+  Todo copyWith({
+    String? id,
+    String? title,
+    String? content,
+    bool? completed,
+  }) {
+    return Todo(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      content: content ?? this.content,
+      completed: completed ?? this.completed,
     );
   }
 }

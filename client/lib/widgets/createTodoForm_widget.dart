@@ -1,75 +1,52 @@
-import 'package:client/blocs/todo/todo_bloc.dart';
-import 'package:client/models/todo_model.dart';
-import 'package:client/repository/todo_repository.dart';
-import 'package:client/services/todo_service.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class CreateTodoForm extends StatelessWidget {
-  CreateTodoForm({Key? key})
-      : todoService = TodoService(TodoRepository(), TodoBloc());
+class CreateTodoForm extends StatefulWidget {
+  const CreateTodoForm({Key? key}) : super(key: key);
 
-  final TodoService todoService;
+  @override
+  _CreateTodoFormState createState() => _CreateTodoFormState();
+}
 
+class _CreateTodoFormState extends State<CreateTodoForm> {
   final titleController = TextEditingController();
   final contentController = TextEditingController();
-  bool completed = false;
 
-  _submit() {
-    final title = titleController.text;
-    final content = contentController.text;
-    if (title.isNotEmpty && content.isNotEmpty) {
-      print('Title: $title');
-      print('content: $content');
-      print('Completed: $completed');
-      todoService.createTodo(Todo(
-        title: title,
-        content: content,
-        completed: completed,
-      ));
-    } else {
-      print('Title and content must not be empty');
-    }
+  void _addTodo() {
+    print('Add todo button pressed');
   }
 
   @override
   Widget build(BuildContext context) {
     return Form(
       child: Column(
-        children: <Widget>[
-          const Text('Title'),
+        children: [
           TextFormField(
             controller: titleController,
             decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Enter a title',
+              hintText: 'Enter todo title',
+              labelText: 'Title',
             ),
           ),
-          const SizedBox(height: 16),
-          const Text('content'),
+          const Padding(padding: EdgeInsets.only(top: 8.0)),
           TextFormField(
             controller: contentController,
             decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Enter a content',
+              hintText: 'Enter todo content',
+              labelText: 'Content',
             ),
           ),
-          const SizedBox(height: 16),
-          const Text('Completed'),
-          Checkbox(
-            value: false,
-            onChanged: (bool? value) {
-              if (kDebugMode) {
-                print('Checkbox value: $value');
-              }
-              completed = value!;
-              print('Completed value: $completed');
-            },
-          ),
-          const SizedBox(height: 16),
+          const Padding(padding: EdgeInsets.only(top: 32.0)),
           ElevatedButton(
-            onPressed: _submit,
-            child: const Text('Create Todo'),
+            onPressed: _addTodo, // Remove the parentheses here
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors
+                  .blue), // Fix 'MaterialStatePropertyAll' to 'MaterialStateProperty.all'
+            ),
+            child: const Text(
+              'Submit',
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
           ),
         ],
       ),

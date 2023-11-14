@@ -1,28 +1,22 @@
+import 'package:client/models/todo_model.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:client/models/todo_model.dart';
-
-sealed class TodoEvent extends Equatable {
+abstract class TodoEvent extends Equatable {
   const TodoEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class FindAllTodos extends TodoEvent {
-  FindAllTodos();
+class GetTodos extends TodoEvent {}
+
+class LoadTodo extends TodoEvent {
+  final List<Todo> todos;
+
+  const LoadTodo({this.todos = const <Todo>[]});
 
   @override
-  List<Object> get props => [];
-}
-
-class FindTodoById extends TodoEvent {
-  final String id;
-
-  FindTodoById({required this.id});
-
-  @override
-  List<Object> get props => [id];
+  List<Object> get props => [todos];
 }
 
 class AddTodo extends TodoEvent {
@@ -31,7 +25,7 @@ class AddTodo extends TodoEvent {
   const AddTodo({required this.todo});
 
   @override
-  List<Object> get props => [todo];
+  List<Object> get props => [Todo];
 }
 
 class UpdateTodo extends TodoEvent {
@@ -40,7 +34,7 @@ class UpdateTodo extends TodoEvent {
   const UpdateTodo({required this.todo});
 
   @override
-  List<Object> get props => [todo];
+  List<Object> get props => [Todo];
 }
 
 class DeleteTodo extends TodoEvent {
@@ -49,5 +43,5 @@ class DeleteTodo extends TodoEvent {
   const DeleteTodo({required this.todo});
 
   @override
-  List<Object> get props => [todo];
+  List<Object> get props => [Todo];
 }
