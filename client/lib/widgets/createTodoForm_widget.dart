@@ -1,4 +1,9 @@
+import 'package:client/blocs/todos/todos_bloc.dart';
+import 'package:client/blocs/todos/todos_event.dart';
+import 'package:client/models/todo_model.dart';
+import 'package:client/repository/todo_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CreateTodoForm extends StatefulWidget {
   const CreateTodoForm({Key? key}) : super(key: key);
@@ -10,10 +15,6 @@ class CreateTodoForm extends StatefulWidget {
 class _CreateTodoFormState extends State<CreateTodoForm> {
   final titleController = TextEditingController();
   final contentController = TextEditingController();
-
-  void _addTodo() {
-    print('Add todo button pressed');
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,19 @@ class _CreateTodoFormState extends State<CreateTodoForm> {
           ),
           const Padding(padding: EdgeInsets.only(top: 32.0)),
           ElevatedButton(
-            onPressed: _addTodo, // Remove the parentheses here
+            onPressed: () async {
+              final todo = Todo(
+                title: titleController.text,
+                content: contentController.text,
+                completed: false,
+              );
+
+              final newTodo = await TodoRepository().createTodo(todo);
+              context.read<TodosBloc>().add(AddTodo(todo: newTodo));
+
+              titleController.clear();
+              contentController.clear();
+            }, // Remove the parentheses here
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors
                   .blue), // Fix 'MaterialStatePropertyAll' to 'MaterialStateProperty.all'
