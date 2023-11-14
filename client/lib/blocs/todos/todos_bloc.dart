@@ -1,12 +1,9 @@
-import 'dart:convert';
-
 import 'package:bloc/bloc.dart';
+
 import 'package:client/blocs/todos/todos_event.dart';
 import 'package:client/blocs/todos/todos_state.dart';
 import 'package:client/models/todo_model.dart';
 import 'package:client/repository/todo_repository.dart';
-import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 
 class TodosBloc extends Bloc<TodoEvent, TodosState> {
   final TodoRepository _todoRepository;

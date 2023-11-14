@@ -1,5 +1,6 @@
-import 'package:client/models/todo_model.dart';
 import 'package:equatable/equatable.dart';
+
+import 'package:client/models/todo_model.dart';
 
 abstract class TodosState extends Equatable {
   const TodosState();

@@ -1,7 +1,8 @@
-import 'package:client/widgets/createTodoForm_widget.dart';
-import 'package:client/widgets/navbar_widget.dart';
-import 'package:client/widgets/todoList_widget.dart';
 import 'package:flutter/material.dart';
+
+import 'package:client/widgets/todo/createTodoForm_widget.dart';
+import 'package:client/widgets/navbar_widget.dart';
+import 'package:client/widgets/todo/todoList_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
