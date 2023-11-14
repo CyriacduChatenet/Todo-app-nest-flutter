@@ -2,7 +2,7 @@ import 'package:client/blocs/todos/todos_bloc.dart';
 import 'package:client/blocs/todos/todos_event.dart';
 import 'package:client/blocs/todos/todos_state.dart';
 import 'package:client/repository/todo_repository.dart';
-import 'package:client/widgets/todoItem_widget.dart';
+import 'package:client/widgets/todo/todoItem_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
