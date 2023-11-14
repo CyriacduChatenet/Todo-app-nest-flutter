@@ -18,19 +18,30 @@ class TodoListWidget extends StatelessWidget {
           itemBuilder: (context, index) {
             final todo = state.todos[index];
             return ListTile(
-              title: Text(todo.title),
-              subtitle: todo.content != null ? Text(todo.content!) : null,
-              trailing: Checkbox(
-                value: todo.completed ??
-                    false, // Utilisez la valeur actuelle de la tâche
-                onChanged: (bool? value) {
-                  context.read<TodosBloc>().add(UpdateTodo(
-                        todo: todo.copyWith(completed: value),
-                      ));
-                  TodoRepository().updateTodo(todo.copyWith(completed: value));
-                },
-              ),
-            );
+                title: Text(todo.title),
+                subtitle: todo.content != null ? Text(todo.content!) : null,
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Checkbox(
+                      value: todo.completed ??
+                          false, // Utilisez la valeur actuelle de la tâche
+                      onChanged: (bool? value) {
+                        context.read<TodosBloc>().add(UpdateTodo(
+                              todo: todo.copyWith(completed: value),
+                            ));
+                        TodoRepository()
+                            .updateTodo(todo.copyWith(completed: value));
+                      },
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          TodoRepository().deleteTodo(todo.id!);
+                          context.read<TodosBloc>().add(DeleteTodo(todo: todo));
+                        },
+                        icon: const Icon(Icons.delete)),
+                  ],
+                ));
           },
         );
       } else {
