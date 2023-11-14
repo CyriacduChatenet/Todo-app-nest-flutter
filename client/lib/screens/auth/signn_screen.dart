@@ -1,3 +1,4 @@
+import 'package:client/widgets/auth/signinForm_widget.dart';
 import 'package:flutter/material.dart';
 
 class SigninScreen extends StatefulWidget {
@@ -16,11 +17,8 @@ class _SigninScreenState extends State<SigninScreen> {
         automaticallyImplyLeading: false,
       ),
       body: const Padding(
-        padding: EdgeInsets.only(top: 24.0, right: 24.0, left: 24.0),
-        child: Column(
-          children: [Text('Form')],
-        ),
-      ),
+          padding: EdgeInsets.only(top: 24.0, right: 24.0, left: 24.0),
+          child: SigninFormWidget()),
     );
     ;
   }
