@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => UsersBloc(
               RepositoryProvider.of<UserRepository>(context),
-            )..add(const LoadUser()),
+            ),
           ),
         ],
         child: MaterialApp(

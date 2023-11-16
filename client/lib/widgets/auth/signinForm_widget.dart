@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 
 import 'package:client/repository/auth_repository.dart';
+import 'package:client/blocs/users/users_bloc.dart';
+import 'package:client/models/user_model.dart';
+import 'package:client/repository/user_repository.dart';
 
 class SigninFormWidget extends StatefulWidget {
   const SigninFormWidget({Key? key}) : super(key: key);
@@ -13,6 +18,13 @@ class _SigninFormWidgetState extends State<SigninFormWidget> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  void _createUserByJwt({required String token}) async {
+    Map<String, dynamic> payload = Jwt.parseJwt(token);
+    String userEmail = payload['email'];
+    User newUser = await UserRepository().findUserByEmail(email: userEmail);
+    context.read<UsersBloc>().add(AddUser(user: newUser));
+  }
+
   void _onSubmit() async {
     final email = _emailController.text;
     final password = _passwordController.text;
@@ -20,7 +32,8 @@ class _SigninFormWidgetState extends State<SigninFormWidget> {
         await AuthRepository().signin(email: email, password: password);
 
     if (token != null) {
-      // Si la requête signup réussit, naviguez vers la nouvelle page (par exemple, HomeScreen).
+      _createUserByJwt(token: token);
+
       Navigator.pushReplacementNamed(context, '/');
     } else {
       throw Exception('Signin failed');
