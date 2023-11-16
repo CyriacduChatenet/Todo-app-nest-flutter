@@ -1,5 +1,6 @@
-import 'package:client/repository/auth_repository.dart';
 import 'package:flutter/material.dart';
+
+import 'package:client/repository/auth_repository.dart';
 
 class SigninFormWidget extends StatefulWidget {
   const SigninFormWidget({Key? key}) : super(key: key);
@@ -15,16 +16,14 @@ class _SigninFormWidgetState extends State<SigninFormWidget> {
   void _onSubmit() async {
     final email = _emailController.text;
     final password = _passwordController.text;
-
-    print('email: $email');
-    print('password: $password');
-
     final token =
         await AuthRepository().signin(email: email, password: password);
 
     if (token != null) {
       // Si la requête signup réussit, naviguez vers la nouvelle page (par exemple, HomeScreen).
       Navigator.pushReplacementNamed(context, '/');
+    } else {
+      throw Exception('Signin failed');
     }
   }
 
