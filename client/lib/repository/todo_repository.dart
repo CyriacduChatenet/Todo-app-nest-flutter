@@ -67,6 +67,7 @@ class TodoRepository extends TodoRepositoryInterface {
       title: todo.title,
       content: todo.content,
       completed: todo.completed,
+      user: todo.user,
     );
 
     final response = await http.patch(

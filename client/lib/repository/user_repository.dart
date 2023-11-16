@@ -42,7 +42,10 @@ class UserRepository implements UserRepositoryInterface {
       required User user,
       required String accessToken}) async {
     User updateUser = User(
-        username: user.username, email: user.email, password: user.password);
+        username: user.username,
+        email: user.email,
+        password: user.password,
+        todos: user.todos != null ? user.todos : []);
 
     final response = await http.patch(
       Uri.parse('$baseUrl/user/${user.id}'),
