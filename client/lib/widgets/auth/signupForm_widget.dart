@@ -1,3 +1,4 @@
+import 'package:client/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 import 'package:client/repository/auth_repository.dart';
@@ -23,8 +24,10 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
         .signup(email: email, password: password, username: username);
 
     if (newUser != null) {
-      // Si la requête signup réussit, naviguez vers la nouvelle page (par exemple, HomeScreen).
+      print('Signup successful, navigating to /signin');
       Navigator.pushReplacementNamed(context, '/signin');
+    } else {
+      print('Signup failed, newUser is null');
     }
   }
 

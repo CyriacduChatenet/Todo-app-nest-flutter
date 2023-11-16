@@ -22,9 +22,9 @@ class User {
   static User fromJson(Map<String, Object?> json) {
     return User(
       id: json['id'] as String?,
-      username: json['username'] as String,
-      email: json['email'] as String,
-      password: json['password'] as String,
+      username: json['username'] as String?,
+      email: json['email'] as String? ?? '',
+      password: json['password'] as String? ?? '',
     );
   }
 
