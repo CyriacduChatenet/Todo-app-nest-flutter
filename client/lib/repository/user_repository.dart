@@ -8,16 +8,16 @@ class UserRepository implements UserRepositoryInterface {
   final String baseUrl = 'http://localhost:8000/api/v1';
 
   @override
-  Future<void> deleteUser(
-      {required String id, required String accessToken}) async {
-    final response =
-        await http.delete(Uri.parse('$baseUrl/user/$id'), headers: {
+  Future<List<User>> findAllUsers() async {
+    final response = await http.get(Uri.parse('$baseUrl/user'), headers: {
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
-      'Authorization': 'Bearer $accessToken',
     });
-    if (response.statusCode != 204) {
-      throw Exception('Failed to delete todo');
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonList = json.decode(response.body);
+      return jsonList.map((json) => User.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to fetch todos');
     }
   }
 
@@ -60,6 +60,20 @@ class UserRepository implements UserRepositoryInterface {
       return User.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to update todo');
+    }
+  }
+
+  @override
+  Future<void> deleteUser(
+      {required String id, required String accessToken}) async {
+    final response =
+        await http.delete(Uri.parse('$baseUrl/user/$id'), headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $accessToken',
+    });
+    if (response.statusCode != 204) {
+      throw Exception('Failed to delete todo');
     }
   }
 }
