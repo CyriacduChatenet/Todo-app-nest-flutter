@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   UseGuards,
+  HttpCode,
 } from '@nestjs/common';
 
 import { UserService } from './user.service';
@@ -44,6 +45,7 @@ export class UserController {
   }
 
   @Delete(':id')
+  @HttpCode(204)
   @UseGuards(JwtAuthGuard)
   @Roles(Role.User, Role.Admin)
   remove(@Param('id') id: string) {
