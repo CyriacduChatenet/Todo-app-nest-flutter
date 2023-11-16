@@ -5,6 +5,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:client/blocs/todos/todos_bloc.dart';
 import 'package:client/blocs/todos/todos_event.dart';
 import 'package:client/repository/todo_repository.dart';
+import 'package:client/blocs/users/users_bloc.dart';
+import 'package:client/repository/user_repository.dart';
 import 'package:client/screens/auth/signin_screen.dart';
 import 'package:client/screens/auth/signup_screen.dart';
 import 'package:client/screens/auth/forgotPassword_screen.dart';
@@ -28,6 +30,11 @@ class MyApp extends StatelessWidget {
             create: (context) => TodosBloc(
               RepositoryProvider.of<TodoRepository>(context),
             )..add(const LoadTodo()),
+          ),
+          BlocProvider(
+            create: (context) => UsersBloc(
+              RepositoryProvider.of<UserRepository>(context),
+            )..add(const LoadUser()),
           ),
         ],
         child: MaterialApp(

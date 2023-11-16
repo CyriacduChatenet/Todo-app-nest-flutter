@@ -12,8 +12,7 @@ class AuthRepository implements AuthRepositoryInterface {
 
   @override
   Future<void> logout() {
-    const FlutterSecureStorage().delete(key: 'token');
-    throw UnimplementedError();
+    return const FlutterSecureStorage().delete(key: 'token');
   }
 
   @override

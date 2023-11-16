@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:client/widgets/navbar_widget.dart';
+import 'package:client/repository/auth_repository.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -10,6 +11,11 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  void _logout() {
+    AuthRepository().logout();
+    Navigator.pushNamed(context, '/signin');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,11 +24,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
         automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: const Padding(
-        padding: EdgeInsets.only(top: 24.0, right: 24.0, left: 24.0),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 24.0, right: 24.0, left: 24.0),
         child: Column(
           children: [
-            Text('Profile'),
+            const Text('Profile'),
+            Center(
+              child: ElevatedButton(
+                onPressed: _logout,
+                child: const Text(
+                  'Logout',
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.blue)),
+              ),
+            )
           ],
         ),
       ),
