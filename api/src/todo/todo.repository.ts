@@ -18,11 +18,15 @@ export class TodoRepository extends Repository<Todo> {
   }
 
   findAllTodos() {
-    return this.createQueryBuilder('todo').getMany();
+    return this.createQueryBuilder('todo')
+      .leftJoinAndSelect('todo.user', 'user')
+      .orderBy('todo.created_at', 'DESC')
+      .getMany();
   }
 
   findOneTodoById(id: string) {
     return this.createQueryBuilder('todo')
+      .leftJoinAndSelect('todo.user', 'user')
       .where('todo.id = :id', { id })
       .getOne();
   }
