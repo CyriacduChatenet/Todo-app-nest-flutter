@@ -9,7 +9,10 @@ class TodoRepository extends TodoRepositoryInterface {
 
   @override
   Future<List<Todo>> findAllTodos() async {
-    final response = await http.get(Uri.parse('$baseUrl/todo'));
+    final response = await http.get(Uri.parse('$baseUrl/todo'), headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Accept': 'application/json',
+    });
     if (response.statusCode == 200) {
       final List<dynamic> jsonList = json.decode(response.body);
       return jsonList.map((json) => Todo.fromJson(json)).toList();
@@ -20,7 +23,10 @@ class TodoRepository extends TodoRepositoryInterface {
 
   @override
   Future<Todo> findTodoById(String id) async {
-    final response = await http.get(Uri.parse('$baseUrl/todo/$id'));
+    final response = await http.get(Uri.parse('$baseUrl/todo/$id'), headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Accept': 'application/json',
+    });
 
     if (response.statusCode == 200) {
       return Todo.fromJson(json.decode(response.body));
@@ -30,7 +36,8 @@ class TodoRepository extends TodoRepositoryInterface {
   }
 
   @override
-  Future<Todo> createTodo(Todo todo) async {
+  Future<Todo> createTodo(
+      {required Todo todo, required String accessToken}) async {
     Todo newTodo = Todo(
       title: todo.title,
       content: todo.content,
@@ -39,8 +46,10 @@ class TodoRepository extends TodoRepositoryInterface {
 
     final response = await http.post(
       Uri.parse('$baseUrl/todo'),
-      headers: <String, String>{
+      headers: {
         'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $accessToken',
       },
       body: jsonEncode(newTodo.toJson()),
     );
@@ -52,7 +61,8 @@ class TodoRepository extends TodoRepositoryInterface {
   }
 
   @override
-  Future<Todo> updateTodo(Todo todo) async {
+  Future<Todo> updateTodo(
+      {required Todo todo, required String accessToken}) async {
     Todo updateTodo = Todo(
       title: todo.title,
       content: todo.content,
@@ -61,8 +71,10 @@ class TodoRepository extends TodoRepositoryInterface {
 
     final response = await http.patch(
       Uri.parse('$baseUrl/todo/${todo.id}'),
-      headers: <String, String>{
+      headers: {
         'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $accessToken',
       },
       body: jsonEncode(updateTodo.toJson()),
     );
@@ -74,8 +86,14 @@ class TodoRepository extends TodoRepositoryInterface {
   }
 
   @override
-  Future<void> deleteTodo(String id) async {
-    final response = await http.delete(Uri.parse('$baseUrl/todo/$id'));
+  Future<void> deleteTodo(
+      {required String id, required String accessToken}) async {
+    final response =
+        await http.delete(Uri.parse('$baseUrl/todo/$id'), headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $accessToken',
+    });
     if (response.statusCode != 204) {
       throw Exception('Failed to delete todo');
     }

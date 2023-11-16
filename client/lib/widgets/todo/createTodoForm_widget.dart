@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:client/blocs/todos/todos_bloc.dart';
 import 'package:client/blocs/todos/todos_event.dart';
@@ -14,6 +15,15 @@ class CreateTodoForm extends StatefulWidget {
 }
 
 class _CreateTodoFormState extends State<CreateTodoForm> {
+  Future<String> getToken() async {
+    final token = await const FlutterSecureStorage().read(key: 'token');
+    if (token != null) {
+      return token;
+    } else {
+      return '';
+    }
+  }
+
   final titleController = TextEditingController();
   final contentController = TextEditingController();
 
@@ -46,7 +56,8 @@ class _CreateTodoFormState extends State<CreateTodoForm> {
                 completed: false,
               );
 
-              final newTodo = await TodoRepository().createTodo(todo);
+              final newTodo = await TodoRepository()
+                  .createTodo(todo: todo, accessToken: await getToken());
               context.read<TodosBloc>().add(AddTodo(todo: newTodo));
 
               titleController.clear();

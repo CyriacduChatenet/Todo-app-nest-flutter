@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:client/blocs/todos/todos_bloc.dart';
 import 'package:client/blocs/todos/todos_event.dart';
@@ -13,6 +14,15 @@ class TodoListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TodosBloc, TodosState>(builder: (context, state) {
+      Future<String> getToken() async {
+        final token = await const FlutterSecureStorage().read(key: 'token');
+        if (token != null) {
+          return token;
+        } else {
+          return '';
+        }
+      }
+
       if (state is TodosLoaded) {
         return ListView.builder(
           shrinkWrap: true,
@@ -21,14 +31,17 @@ class TodoListWidget extends StatelessWidget {
             final todo = state.todos[index];
             return TodoItemWidget(
               todo: todo,
-              onCheckboxChanged: (bool? value) {
+              onCheckboxChanged: (bool? value) async {
                 context.read<TodosBloc>().add(UpdateTodo(
                       todo: todo.copyWith(completed: value),
                     ));
-                TodoRepository().updateTodo(todo.copyWith(completed: value));
+                TodoRepository().updateTodo(
+                    todo: todo.copyWith(completed: value),
+                    accessToken: await getToken());
               },
-              onDeletePressed: () {
-                TodoRepository().deleteTodo(todo.id!);
+              onDeletePressed: () async {
+                TodoRepository()
+                    .deleteTodo(id: todo.id!, accessToken: await getToken());
                 context.read<TodosBloc>().add(DeleteTodo(todo: todo));
               },
             );
