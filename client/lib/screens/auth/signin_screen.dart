@@ -21,6 +21,5 @@ class _SigninScreenState extends State<SigninScreen> {
           padding: EdgeInsets.only(top: 24.0, right: 24.0, left: 24.0),
           child: SigninFormWidget()),
     );
-    ;
   }
 }
