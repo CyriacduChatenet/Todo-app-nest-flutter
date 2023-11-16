@@ -3,13 +3,13 @@ class Todo {
     this.id,
     required this.title,
     this.content,
-    this.completed,
+    required this.completed,
   });
 
   final String? id;
   final String title;
   final String? content;
-  final bool? completed;
+  final bool completed;
 
   Map<String, Object?> toJson() {
     return {
@@ -22,9 +22,9 @@ class Todo {
   static Todo fromJson(Map<String, Object?> json) {
     return Todo(
       id: json['id'] as String?,
-      title: json['title'] as String,
+      title: json['title'] as String? ?? '',
       content: json['content'] as String?,
-      completed: json['completed'] as bool,
+      completed: json['completed'] as bool? ?? false,
     );
   }
 
