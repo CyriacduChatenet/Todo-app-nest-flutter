@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:client/blocs/todos/todos_bloc.dart';
 import 'package:client/blocs/todos/todos_event.dart';
 import 'package:client/repository/todo_repository.dart';
-import 'package:client/screens/auth/signn_screen.dart';
+import 'package:client/screens/auth/signin_screen.dart';
+import 'package:client/screens/auth/signup_screen.dart';
+import 'package:client/screens/auth/forgotPassword_screen.dart';
 import 'package:client/screens/profile_screen.dart';
 import 'package:client/screens/home_screen.dart';
 
@@ -36,6 +38,8 @@ class MyApp extends StatelessWidget {
             initialRoute: '/signin',
             routes: {
               '/signin': (context) => const SigninScreen(),
+              '/signup': (context) => const SignupScreen(),
+              '/forgot-password': (context) => const ForgotPasswordScreen(),
               '/': (context) => const HomeScreen(),
               '/profile': (context) => const ProfileScreen(),
             },
