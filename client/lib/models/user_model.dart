@@ -30,9 +30,7 @@ class User {
       username: json['username'] as String?,
       email: json['email'] as String? ?? '',
       password: json['password'] as String? ?? '',
-      todos: (json['todos'] as List<dynamic>)
-          .map((todoJson) => Todo.fromJson(todoJson as Map<String, Object?>))
-          .toList(),
+      todos: (json['todos'] as List<dynamic>?)?.map((todoJson) => Todo.fromJson(todoJson as Map<String, Object?>)).toList() ?? [],
     );
   }
 
