@@ -1,7 +1,12 @@
+import 'package:client/blocs/users/users_bloc.dart';
+import 'package:client/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 import 'package:client/widgets/navbar_widget.dart';
 import 'package:client/repository/auth_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -14,6 +19,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void _logout() {
     AuthRepository().logout();
     Navigator.pushNamed(context, '/signin');
+  }
+
+  String userEmail = '';
+
+  void _decodeToken() async {
+    final token = await const FlutterSecureStorage().read(key: 'token');
+    final decodedToken = Jwt.parseJwt(token ?? '');
+    setState(() {
+      userEmail = decodedToken['email'];
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _decodeToken();
+    context.read<UsersBloc>().add(GetUser(userEmail: userEmail));
   }
 
   @override
@@ -29,6 +51,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column(
           children: [
             const Text('Profile'),
+            BlocBuilder<UsersBloc, UsersState>(
+              builder: (context, state) {
+                if (state is UsersLoading) {
+                  return const CircularProgressIndicator();
+                } else if (state is UsersLoaded) {
+                  List<User> users = state.users;
+                  return Column(
+                    children: [
+                      for (User user in users)
+                        ListTile(
+                          title: Text(user.username ?? ''),
+                          subtitle: Text(user.email),
+                        ),
+                    ],
+                  );
+                } else if (state is UsersError) {
+                  return Text('Error: ${state.message}');
+                } else {
+                  return Container();
+                }
+              },
+            ),
             Center(
               child: ElevatedButton(
                 onPressed: _logout,

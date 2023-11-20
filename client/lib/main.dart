@@ -22,8 +22,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (context) => TodoRepository(),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(create: (context) => UserRepository()),
+        RepositoryProvider(create: (context) => TodoRepository()),
+      ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
@@ -45,11 +48,9 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
           ),
           home: FutureBuilder(
-            // Check if the token is present
             future: const FlutterSecureStorage().read(key: 'token'),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                // If token is present, navigate to HomeScreen, else to SigninScreen
                 final String? token = snapshot.data;
                 final String initialRoute =
                     token != null && token.isNotEmpty ? '/' : '/signin';
@@ -67,7 +68,6 @@ class MyApp extends StatelessWidget {
                   debugShowCheckedModeBanner: false,
                 );
               } else {
-                // Show a loading screen while checking for the token
                 return const CircularProgressIndicator();
               }
             },

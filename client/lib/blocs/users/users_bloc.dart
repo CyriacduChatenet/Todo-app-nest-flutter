@@ -12,6 +12,7 @@ class UsersBloc extends Bloc<UserEvent, UsersState> {
 
   UsersBloc(this._userRepository) : super(const UsersLoaded()) {
     on<LoadUser>(_onLoadUser);
+    on<GetUser>(_onGetUser);
     on<AddUser>(_onAddUser);
     on<DeleteUser>(_onDeleteUser);
     on<UpdateUser>(_onUpdateUser);
@@ -22,6 +23,18 @@ class UsersBloc extends Bloc<UserEvent, UsersState> {
     try {
       final users = await _userRepository.findAllUsers();
       emit(UsersLoaded(users: users));
+    } catch (e) {
+      emit(UsersError(e.toString()));
+    }
+  }
+
+  Future<void> _onGetUser(GetUser event, Emitter<UsersState> emit) async {
+    emit(UsersLoading());
+    try {
+      final user =
+          await _userRepository.findUserByEmail(email: event.userEmail);
+      emit(UsersLoaded(
+          users: [user])); // Vous pouvez ajuster la liste selon vos besoins
     } catch (e) {
       emit(UsersError(e.toString()));
     }
