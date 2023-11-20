@@ -38,6 +38,11 @@ export class TodoController {
     return this.todoService.findOne(id);
   }
 
+  @Get('user/:email')
+  findAllByUserEmail(@Param('email') email: string) {
+    return this.todoService.findAllByUserEmail(email);
+  }
+
   @Patch(':id')
   @UseGuards(JwtAuthGuard)
   @Roles(Role.User, Role.Admin)

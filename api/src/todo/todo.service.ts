@@ -27,6 +27,14 @@ export class TodoService {
     }
   }
 
+  findAllByUserEmail(email: string) {
+    try {
+      return this.todoRepository.findAllTodosByUserEmail(email);
+    } catch (err) {
+      throw new NotFoundException(err);
+    }
+  }
+
   findOne(id: string) {
     try {
       return this.todoRepository.findOneTodoById(id);

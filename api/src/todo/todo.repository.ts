@@ -24,6 +24,14 @@ export class TodoRepository extends Repository<Todo> {
       .getMany();
   }
 
+  findAllTodosByUserEmail(email: string) {
+    return this.createQueryBuilder('todo')
+      .leftJoinAndSelect('todo.user', 'user')
+      .where('user.email = :email', { email })
+      .orderBy('todo.created_at', 'DESC')
+      .getMany();
+  }
+
   findOneTodoById(id: string) {
     return this.createQueryBuilder('todo')
       .leftJoinAndSelect('todo.user', 'user')
