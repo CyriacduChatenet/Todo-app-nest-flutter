@@ -14,6 +14,7 @@ class TodoRepository extends TodoRepositoryInterface {
       'Accept': 'application/json',
     });
     if (response.statusCode == 200) {
+      print(response.body);
       final List<dynamic> jsonList = json.decode(response.body);
       return jsonList.map((json) => Todo.fromJson(json)).toList();
     } else {

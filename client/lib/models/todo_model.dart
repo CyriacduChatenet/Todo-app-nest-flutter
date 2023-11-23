@@ -30,8 +30,7 @@ class Todo {
       title: json['title'] as String? ?? '',
       content: json['content'] as String?,
       completed: json['completed'] as bool? ?? false,
-      // Convertir le JSON de l'utilisateur en objet User
-      user: json['user'] != null
+      user: json['user'] != null && json['user'] is Map<String, Object?>
           ? User.fromJson(json['user'] as Map<String, Object?>)
           : null,
     );
