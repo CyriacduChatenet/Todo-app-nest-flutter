@@ -37,7 +37,9 @@ class TodoRepository extends TodoRepositoryInterface {
 
   @override
   Future<Todo> createTodo(
-      {required Todo todo, required String accessToken}) async {
+      {required Todo todo,
+      required String userId,
+      required String accessToken}) async {
     Todo newTodo = Todo(
       title: todo.title,
       content: todo.content,
@@ -51,7 +53,12 @@ class TodoRepository extends TodoRepositoryInterface {
         'Accept': 'application/json',
         'Authorization': 'Bearer $accessToken',
       },
-      body: jsonEncode(newTodo.toJson()),
+      body: jsonEncode({
+        'title': newTodo.title,
+        'content': newTodo.content,
+        'completed': newTodo.completed,
+        'user': userId,
+      }),
     );
     if (response.statusCode == 201) {
       return Todo.fromJson(json.decode(response.body));
