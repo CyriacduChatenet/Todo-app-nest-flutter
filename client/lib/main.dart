@@ -44,8 +44,10 @@ class MyApp extends StatelessWidget {
           title: 'Flutter Demo',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-            useMaterial3: true,
+            primaryColor: Colors.blue,
+            appBarTheme: const AppBarTheme(
+              backgroundColor: Colors.blue,
+            ),
           ),
           home: FutureBuilder(
             future: const FlutterSecureStorage().read(key: 'token'),

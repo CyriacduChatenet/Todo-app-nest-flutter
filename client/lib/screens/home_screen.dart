@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('Todo List'),
         automaticallyImplyLeading: false,
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: const Color.fromARGB(255, 128, 196, 251),
       ),
       body: const Padding(
         padding: EdgeInsets.only(top: 24.0, right: 24.0, left: 24.0),
