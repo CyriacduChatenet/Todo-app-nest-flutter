@@ -16,14 +16,14 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  String userEmail = '';
+
   void _logout() {
     AuthRepository().logout();
     Navigator.pushNamed(context, '/signin');
   }
 
-  String userEmail = '';
-
-  void _decodeToken() async {
+  Future<void> _decodeToken() async {
     final token = await const FlutterSecureStorage().read(key: 'token');
     final decodedToken = Jwt.parseJwt(token ?? '');
     setState(() {
@@ -34,7 +34,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    _decodeToken();
+    _init();
+  }
+
+  Future<void> _init() async {
+    await _decodeToken();
     context.read<UsersBloc>().add(GetUser(userEmail: userEmail));
   }
 
